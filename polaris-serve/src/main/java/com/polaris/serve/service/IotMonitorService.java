@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 */
 public interface IotMonitorService extends IService<IotMonitor> {
     Integer authSrsPublish(AuthSrsStreamRequest request);
+    Integer authSrsUnPublish(AuthSrsStreamRequest request);
     ResponseEntity<RespBean> createMonitor(MonitorCreateRequest request);
 
     ResponseEntity<RespBean> deleteMonitor(Long monitorId);

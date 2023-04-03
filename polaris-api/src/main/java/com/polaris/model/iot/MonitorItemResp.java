@@ -8,6 +8,16 @@ public class MonitorItemResp {
 
     private Integer status;
 
+    private Integer onLine;
+
+    public Integer getOnLine() {
+        return onLine;
+    }
+
+    public void setOnLine(Integer onLine) {
+        this.onLine = onLine;
+    }
+
     public String getId() {
         return id;
     }
@@ -40,10 +50,11 @@ public class MonitorItemResp {
         this.createTime = createTime;
     }
 
-    public MonitorItemResp(String id, String name, String createTime, Integer status) {
+    public MonitorItemResp(String id, String name, String createTime, Integer status, Integer onLine) {
         this.id = id;
         this.name = name;
         this.createTime = createTime;
         this.status = status;
+        this.onLine = onLine;
     }
 }

@@ -9,6 +9,7 @@
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="projectId" column="project_id" jdbcType="BIGINT"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="onLine" column="on_line" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="monitorKey" column="monitor_key" jdbcType="VARCHAR"/>
             <result property="createUser" column="create_user" jdbcType="BIGINT"/>
@@ -18,12 +19,12 @@
     <sql id="Base_Column_List">
         id,name,project_id,
         status,create_time,monitor_key,
-        create_user,describes
+        create_user,describes, on_line
     </sql>
 
     <select id="getMonitorDetail" parameterType="java.lang.Long" resultType="com.polaris.model.iot.MonitorGetResponse">
         SELECT monitor.id, monitor.name, monitor.create_time, monitor.status, monitor.describes,
-               monitor.project_id, monitor.monitor_key,
+               monitor.project_id, monitor.monitor_key,monitor.on_line,
                project.name as projectName
         FROM iot_monitor monitor
         LEFT JOIN iot_project project

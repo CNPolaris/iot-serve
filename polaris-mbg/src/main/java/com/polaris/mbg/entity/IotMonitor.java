@@ -56,6 +56,16 @@ public class IotMonitor implements Serializable {
      */
     private String describes;
 
+    private Integer onLine;
+
+    public Integer getOnLine() {
+        return onLine;
+    }
+
+    public void setOnLine(Integer onLine) {
+        this.onLine = onLine;
+    }
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

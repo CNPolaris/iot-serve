@@ -28,5 +28,5 @@ secure:
       - /iot/login
       - /iot/gateway/auth
       - /iot/monitor/auth
-      - /iot/v1/srs/stream/publish
+      - /iot/v1/srs/stream/**
 

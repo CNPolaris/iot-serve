@@ -31,4 +31,21 @@ public interface AuthMonitorApi {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
+    /**
+     * /iot/v1/srs/stream/unpublish : 验证推流
+     *
+     * @param request  (optional)
+     * @return 成功 (status code 200)
+     */
+    @ApiOperation(value = "验证推流", nickname = "iotMonitorSrsPublish", notes = "", response = RespBean.class, tags={ "", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "成功", response = RespBean.class) })
+    @RequestMapping(value = "/iot/v1/srs/stream/unpublish",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    default ResponseEntity<AuthMonitorResponse> iotMonitorSrsUnPublish(@ApiParam(value = ""  ) @RequestBody(required = true) AuthSrsStreamRequest request) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
 }

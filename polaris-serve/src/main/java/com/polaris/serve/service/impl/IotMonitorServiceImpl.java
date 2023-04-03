@@ -39,6 +39,8 @@ implements IotMonitorService{
             }
             IotMonitor monitor = monitorMapper.selectOne(new QueryWrapper<IotMonitor>().eq("monitor_key", request.getStream()));
             if (monitor != null && monitor.getStatus().equals(Commons.YES)) {
+                monitor.setOnLine(StatusTypeEnum.YES.getCode());
+                updateById(monitor);
                 return 0;
             }
             return 1;
@@ -47,7 +49,25 @@ implements IotMonitorService{
         }
     }
 
-        @Override
+    @Override
+    public Integer authSrsUnPublish(AuthSrsStreamRequest request) {
+         try {
+            if (request.getServer_id() == null) {
+                return 1;
+            }
+            IotMonitor monitor = monitorMapper.selectOne(new QueryWrapper<IotMonitor>().eq("monitor_key", request.getStream()));
+            if (monitor != null && monitor.getStatus().equals(Commons.YES)) {
+                monitor.setOnLine(StatusTypeEnum.NO.getCode());
+                updateById(monitor);
+                return 0;
+            }
+            return 1;
+        } catch (Exception e) {
+            return 1;
+        }
+    }
+
+    @Override
     public ResponseEntity<RespBean> createMonitor(MonitorCreateRequest request) {
         try{
             IotMonitor iotMonitor = new IotMonitor();
@@ -57,6 +77,7 @@ implements IotMonitorService{
             iotMonitor.setDescribes(request.getDescribes());
             iotMonitor.setCreateUser(request.getCreateUser());
             iotMonitor.setStatus(StatusTypeEnum.YES.getCode());
+            iotMonitor.setOnLine(StatusTypeEnum.NO.getCode());
             iotMonitor.setProjectId(request.getProjectId());
             long time = System.currentTimeMillis();
             iotMonitor.setCreateTime(new Timestamp(time));
@@ -95,7 +116,7 @@ implements IotMonitorService{
         response.setTotal(objectPage.getTotal());
         List<MonitorItemResp> list = new ArrayList<>();
         objectPage.getRecords().forEach(item -> {
-            MonitorItemResp itemResp = new MonitorItemResp(item.getId().toString(), item.getName(), item.getCreateTime().toString(), item.getStatus());
+            MonitorItemResp itemResp = new MonitorItemResp(item.getId().toString(), item.getName(), item.getCreateTime().toString(), item.getStatus(), item.getOnLine());
             list.add(itemResp);
         });
         response.setSize(list.size());

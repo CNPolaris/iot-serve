@@ -20,4 +20,16 @@ public class AuthMonitorController implements AuthMonitorApi {
         AuthMonitorResponse response = new AuthMonitorResponse(monitorService.authSrsPublish(request));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    /**
+     * /iot/v1/srs/stream/unpublish : 验证推流
+     *
+     * @param request (optional)
+     * @return 成功 (status code 200)
+     */
+    @Override
+    public ResponseEntity<AuthMonitorResponse> iotMonitorSrsUnPublish(AuthSrsStreamRequest request) {
+        AuthMonitorResponse response = new AuthMonitorResponse(monitorService.authSrsUnPublish(request));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

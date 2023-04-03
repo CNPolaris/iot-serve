@@ -15,4 +15,6 @@ public class MonitorGetResponse {
     private String monitorKey;
 
     private String projectName;
+
+    private Integer onLine;
 }
