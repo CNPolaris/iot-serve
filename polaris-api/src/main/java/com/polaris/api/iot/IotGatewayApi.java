@@ -1,6 +1,7 @@
 package com.polaris.api.iot;
 
 import com.polaris.model.iot.CreateGatewayRequest;
+import com.polaris.model.iot.GatewayListRequest;
 import com.polaris.model.iot.UpdateGatewayRequest;
 import com.polaris.common.dto.RespBean;
 import io.swagger.annotations.ApiOperation;
@@ -102,9 +103,10 @@ public interface IotGatewayApi {
     @RequestMapping(value = "/iot/api/gateway/list/{projectId}",
             produces = { "application/json" },
             consumes = { "application/json" },
-            method = RequestMethod.GET)
+            method = RequestMethod.POST)
     default ResponseEntity<Object> iotApiGatewayListGet(@ApiParam(value = "" ) @RequestHeader(value="Authorization", required=true) String authorization,
-                                                      @ApiParam(value = ""  ) @PathVariable(value = "projectId", required = true) Long projectId) {
+                                                        @ApiParam(value = ""  ) @PathVariable(value = "projectId", required = true) Long projectId,
+                                                        @RequestBody GatewayListRequest request) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 

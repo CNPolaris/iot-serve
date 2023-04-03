@@ -39,4 +39,18 @@ public class GatewayDetailResponse {
     private String describes;
 
     private String address;
+
+    public GatewayDetailResponse() {
+    }
+
+    public GatewayDetailResponse(Long id, String name, String gatewayKey, Date createTime, Integer status, Long projectId, String describes, String address) {
+        this.id = id;
+        this.name = name;
+        this.gatewayKey = gatewayKey;
+        this.createTime = createTime;
+        this.status = status;
+        this.projectId = projectId;
+        this.describes = describes;
+        this.address = address;
+    }
 }

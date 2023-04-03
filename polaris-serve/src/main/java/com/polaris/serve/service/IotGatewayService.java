@@ -1,6 +1,7 @@
 package com.polaris.serve.service;
 
 import com.polaris.model.iot.CreateGatewayRequest;
+import com.polaris.model.iot.GatewayListRequest;
 import com.polaris.model.iot.UpdateGatewayRequest;
 import com.polaris.common.dto.RespBean;
 import com.polaris.mbg.entity.IotGateway;
@@ -18,6 +19,7 @@ public interface IotGatewayService extends IService<IotGateway> {
     RespBean getIotGatewayCount(Long projectId);
 
     RespBean getGatewayIdByProject(Long projectId);
+    RespBean getGatewayIdByProject(Long projectId, GatewayListRequest request);
 
     RespBean getGatewayDetail(Long gatewayId);
 

@@ -1,13 +1,12 @@
 package com.polaris.serve.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.polaris.mbg.entity.SysServe;
 import com.polaris.mbg.mapper.SysServeMapper;
 import com.polaris.mbg.mapper.SysServerProjectMapper;
-import com.polaris.model.iot.CreateGatewayRequest;
-import com.polaris.model.iot.GatewayDetailResponse;
-import com.polaris.model.iot.UpdateGatewayRequest;
+import com.polaris.model.iot.*;
 import com.polaris.common.dto.RespBean;
 import com.polaris.common.enums.StatusTypeEnum;
 import com.polaris.mbg.entity.IotGateway;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,6 +66,26 @@ implements IotGatewayService{
         QueryWrapper<IotGateway> queryWrapper = new QueryWrapper<IotGateway>().eq("project_id", projectId);
         List<IotGateway> iotGateways = gatewayMapper.selectList(queryWrapper);
         return RespBean.success(iotGateways);
+    }
+
+    @Override
+    public RespBean getGatewayIdByProject(Long projectId, GatewayListRequest request) {
+        // get server
+        SysServe serve = serveMapper.getByProjectId(projectId);
+        Page<IotGateway> objectPage = new Page<>(request.getPage(), request.getLimit());
+        gatewayMapper.selectPage(objectPage, new QueryWrapper<IotGateway>().eq("project_id", projectId));
+        GatewayListResponse res = new GatewayListResponse();
+        res.setTotal(objectPage.getTotal());
+        List<GatewayDetailResponse> list = new ArrayList<>();
+        objectPage.getRecords().forEach(item-> {
+            GatewayDetailResponse bean = new GatewayDetailResponse(
+                    item.getId(), item.getName(), item.getGatewayKey(), item.getCreateTime(), item.getStatus(),
+                    item.getProjectId(), item.getDescribes(), serve.getAddress());
+            list.add(bean);
+        });
+        res.setSize(list.size());
+        res.setList(list);
+        return RespBean.success(res);
     }
 
     @Override

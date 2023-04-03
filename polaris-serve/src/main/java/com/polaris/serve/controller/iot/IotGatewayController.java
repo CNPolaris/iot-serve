@@ -2,6 +2,7 @@ package com.polaris.serve.controller.iot;
 
 import com.polaris.api.iot.IotGatewayApi;
 import com.polaris.model.iot.CreateGatewayRequest;
+import com.polaris.model.iot.GatewayListRequest;
 import com.polaris.model.iot.UpdateGatewayRequest;
 import com.polaris.common.dto.RespBean;
 import com.polaris.serve.service.IotGatewayService;
@@ -24,8 +25,8 @@ public class IotGatewayController implements IotGatewayApi {
     }
 
     @Override
-    public ResponseEntity<Object> iotApiGatewayListGet(String authorization, Long projectId) {
-        return new ResponseEntity<>(gatewayService.getGatewayIdByProject(projectId), HttpStatus.OK);
+    public ResponseEntity<Object> iotApiGatewayListGet(String authorization, Long projectId, GatewayListRequest request) {
+        return new ResponseEntity<>(gatewayService.getGatewayIdByProject(projectId, request), HttpStatus.OK);
     }
 
     @Override
