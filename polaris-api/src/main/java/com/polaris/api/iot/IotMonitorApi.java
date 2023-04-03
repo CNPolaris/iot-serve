@@ -1,9 +1,6 @@
 package com.polaris.api.iot;
 
-import com.polaris.model.iot.AuthMonitorResponse;
-import com.polaris.model.iot.AuthSrsStreamRequest;
-import com.polaris.model.iot.MonitorCreateRequest;
-import com.polaris.model.iot.MonitorGetListRequest;
+import com.polaris.model.iot.*;
 import com.polaris.common.dto.RespBean;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 public interface IotMonitorApi {
 
-        /**
+    /**
      * POST /iot/api/monitor : 添加监控
      *
      * @param authorization  (optional)
@@ -33,7 +30,25 @@ public interface IotMonitorApi {
                                                          @ApiParam(value = ""  ) @RequestBody(required = true) MonitorCreateRequest request) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
-
+    /**
+     * POST /iot/api/monitor : 更新监控
+     *
+     * @param authorization  (optional)
+     * @param request  (optional)
+     * @return 成功 (status code 200)
+     */
+    @ApiOperation(value = "更新监控", nickname = "iotApiMonitorUpdate", notes = "", response = Object.class, tags={ "IOT", "Monitor"})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "成功", response = Object.class) })
+    @RequestMapping(value = "/iot/api/monitor/{monitorId}",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    default ResponseEntity<RespBean> iotApiMonitorUpdate(@ApiParam(value = "" ) @RequestHeader(value="Authorization", required=true) String authorization,
+                                                         @PathVariable Long monitorId,
+                                                         @ApiParam(value = ""  ) @RequestBody(required = true) MonitorUpdateRequest request) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
     /**
      * DELETE /iot/api/monitor : 删除监控
      *

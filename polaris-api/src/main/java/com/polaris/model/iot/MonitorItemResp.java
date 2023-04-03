@@ -1,5 +1,8 @@
 package com.polaris.model.iot;
 
+import lombok.Data;
+
+@Data
 public class MonitorItemResp {
     private String id;
     private String name;
@@ -9,46 +12,8 @@ public class MonitorItemResp {
     private Integer status;
 
     private Integer onLine;
-
-    public Integer getOnLine() {
-        return onLine;
-    }
-
-    public void setOnLine(Integer onLine) {
-        this.onLine = onLine;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
+    private String monitorKey;
+    private String describes;
 
     public MonitorItemResp(String id, String name, String createTime, Integer status, Integer onLine) {
         this.id = id;
@@ -56,5 +21,15 @@ public class MonitorItemResp {
         this.createTime = createTime;
         this.status = status;
         this.onLine = onLine;
+    }
+
+    public MonitorItemResp(String id, String name, String createTime, Integer status, Integer onLine, String monitorKey, String describes) {
+        this.id = id;
+        this.name = name;
+        this.createTime = createTime;
+        this.status = status;
+        this.onLine = onLine;
+        this.monitorKey = monitorKey;
+        this.describes = describes;
     }
 }

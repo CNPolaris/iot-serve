@@ -3,6 +3,8 @@ package com.polaris.serve.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.polaris.mbg.entity.SysServe;
+import com.polaris.mbg.mapper.SysServeMapper;
 import com.polaris.model.iot.*;
 import com.polaris.common.dto.RespBean;
 import com.polaris.common.enums.StatusTypeEnum;
@@ -30,6 +32,9 @@ public class IotMonitorServiceImpl extends ServiceImpl<IotMonitorMapper, IotMoni
 implements IotMonitorService{
     @Resource
     private IotMonitorMapper monitorMapper;
+
+    @Resource
+    private SysServeMapper serveMapper;
 
     @Override
     public Integer authSrsPublish(AuthSrsStreamRequest request) {
@@ -112,16 +117,29 @@ implements IotMonitorService{
     public ResponseEntity<Object> getMonitorList(MonitorGetListRequest request) {
         Page<IotMonitor> objectPage = new Page<>(request.getPage(), request.getLimit());
         monitorMapper.selectPage(objectPage, new QueryWrapper<IotMonitor>().eq("project_id", request.getProjectId()));
+        SysServe serve = serveMapper.getByProjectId(request.getProjectId());
         MonitorGetListResponse response = new MonitorGetListResponse();
         response.setTotal(objectPage.getTotal());
         List<MonitorItemResp> list = new ArrayList<>();
         objectPage.getRecords().forEach(item -> {
-            MonitorItemResp itemResp = new MonitorItemResp(item.getId().toString(), item.getName(), item.getCreateTime().toString(), item.getStatus(), item.getOnLine());
+            MonitorItemResp itemResp = new MonitorItemResp(
+                    item.getId().toString(), item.getName(), item.getCreateTime().toString(),
+                    item.getStatus(), item.getOnLine(),"rtmp://" +serve.getAddress()+":port/live/" + item.getMonitorKey(), item.getDescribes());
             list.add(itemResp);
         });
         response.setSize(list.size());
         response.setList(list);
         return new ResponseEntity<>(RespBean.success(response), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<RespBean> updateMonitor(Long monitorId, MonitorUpdateRequest request) {
+        IotMonitor monitor = getById(monitorId);
+        monitor.setName(request.getName());
+        monitor.setDescribes(request.getDescribes());
+        monitor.setStatus(request.getStatus());
+        updateById(monitor);
+        return new ResponseEntity<>(RespBean.success(monitor), HttpStatus.OK);
     }
 
 }
