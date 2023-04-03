@@ -1,6 +1,8 @@
 package com.polaris.serve.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.polaris.mbg.entity.SysServerProject;
+import com.polaris.mbg.mapper.SysServerProjectMapper;
 import com.polaris.model.iot.CreateProjectRequest;
 import com.polaris.model.iot.GetMyProjectResponse;
 import com.polaris.common.dto.RespBean;
@@ -30,8 +32,14 @@ implements IotProjectService{
     @Resource
     private IotProjectMapper projectMapper;
 
+    @Resource
+    private SysServerProjectMapper serverProjectMapper;
+
     @Override
     public RespBean createIotProject(Long userId, Integer role, CreateProjectRequest request) {
+        if (request.getServerId().equals(null)) {
+            return RespBean.error("请至少选择一个服务器");
+        }
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         IotProject iotProject = new IotProject();
         iotProject.setProjectKey(uuid);
@@ -48,6 +56,11 @@ implements IotProjectService{
             iotProject.setUserCount(Commons.PRO_COUNT - 1);
         }
         save(iotProject);
+        SysServerProject serverProject = new SysServerProject();
+        serverProject.setServeId(request.getServerId());
+        serverProject.setProjectId(iotProject.getId());
+        serverProject.setStatus(StatusTypeEnum.YES.getCode());
+        serverProjectMapper.insert(serverProject);
 
         return RespBean.success("创建项目成功", iotProject);
     }

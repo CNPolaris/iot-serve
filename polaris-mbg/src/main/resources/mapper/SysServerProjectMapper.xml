@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polaris.mbg.mapper.SysServerProjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.polaris.mbg.entity.SysServerProject">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="projectId" column="project_id" jdbcType="BIGINT"/>
+            <result property="serveId" column="serve_id" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id,serve_id,
+        status
+    </sql>
+</mapper>

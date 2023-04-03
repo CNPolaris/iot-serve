@@ -2,7 +2,11 @@ package com.polaris.serve.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.polaris.mbg.entity.SysServe;
+import com.polaris.mbg.mapper.SysServeMapper;
+import com.polaris.mbg.mapper.SysServerProjectMapper;
 import com.polaris.model.iot.CreateGatewayRequest;
+import com.polaris.model.iot.GatewayDetailResponse;
 import com.polaris.model.iot.UpdateGatewayRequest;
 import com.polaris.common.dto.RespBean;
 import com.polaris.common.enums.StatusTypeEnum;
@@ -28,6 +32,11 @@ public class IotGatewayServiceImpl extends ServiceImpl<IotGatewayMapper, IotGate
 implements IotGatewayService{
     @Resource
     private IotGatewayMapper gatewayMapper;
+    @Resource
+    private SysServerProjectMapper serverProjectMapper;
+    @Resource
+    private SysServeMapper serveMapper;
+
 
     @Override
     public RespBean createIotGateway(CreateGatewayRequest request) {
@@ -63,7 +72,17 @@ implements IotGatewayService{
     public RespBean getGatewayDetail(Long gatewayId) {
         QueryWrapper<IotGateway> queryWrapper = new QueryWrapper<IotGateway>().eq("id", gatewayId);
         IotGateway iotGateway = gatewayMapper.selectOne(queryWrapper);
-        return RespBean.success(iotGateway);
+        SysServe serve = serveMapper.getByProjectId(iotGateway.getProjectId());
+        GatewayDetailResponse response = new GatewayDetailResponse();
+        response.setId(iotGateway.getId());
+        response.setGatewayKey(iotGateway.getGatewayKey());
+        response.setName(iotGateway.getName());
+        response.setProjectId(iotGateway.getProjectId());
+        response.setStatus(iotGateway.getStatus());
+        response.setDescribes(iotGateway.getDescribes());
+        response.setCreateTime(iotGateway.getCreateTime());
+        response.setAddress(serve.getAddress());
+        return RespBean.success(response);
     }
 
     @Override
