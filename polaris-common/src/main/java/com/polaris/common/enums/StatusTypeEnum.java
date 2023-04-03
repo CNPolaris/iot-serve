@@ -8,8 +8,8 @@ import java.util.Map;
  */
 
 public enum StatusTypeEnum {
-    YES(0, "有效"),
-    NO(1, "无效");
+    YES(1, "有效"),
+    NO(0, "无效");
     int code;
     String name;
     StatusTypeEnum(int code, String name) {

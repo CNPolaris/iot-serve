@@ -8,8 +8,8 @@ public class Commons {
     /**
      * 有效状态 1有效 0无效
      */
-    public final static int YES = 0;
-    public final static int NO = 1;
+    public final static int YES = 1;
+    public final static int NO = 0;
     /**
      * 成功
      */

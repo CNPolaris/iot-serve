@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class GatewayDetailResponse {
-    private Long id;
+    private String id;
 
     /**
      *
@@ -43,7 +43,7 @@ public class GatewayDetailResponse {
     public GatewayDetailResponse() {
     }
 
-    public GatewayDetailResponse(Long id, String name, String gatewayKey, Date createTime, Integer status, Long projectId, String describes, String address) {
+    public GatewayDetailResponse(String id, String name, String gatewayKey, Date createTime, Integer status, Long projectId, String describes, String address) {
         this.id = id;
         this.name = name;
         this.gatewayKey = gatewayKey;

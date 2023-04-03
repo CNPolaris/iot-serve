@@ -79,7 +79,7 @@ implements IotGatewayService{
         List<GatewayDetailResponse> list = new ArrayList<>();
         objectPage.getRecords().forEach(item-> {
             GatewayDetailResponse bean = new GatewayDetailResponse(
-                    item.getId(), item.getName(), item.getGatewayKey(), item.getCreateTime(), item.getStatus(),
+                    item.getId().toString(), item.getName(), item.getGatewayKey(), item.getCreateTime(), item.getStatus(),
                     item.getProjectId(), item.getDescribes(), serve.getAddress());
             list.add(bean);
         });
@@ -94,7 +94,7 @@ implements IotGatewayService{
         IotGateway iotGateway = gatewayMapper.selectOne(queryWrapper);
         SysServe serve = serveMapper.getByProjectId(iotGateway.getProjectId());
         GatewayDetailResponse response = new GatewayDetailResponse();
-        response.setId(iotGateway.getId());
+        response.setId(iotGateway.getId().toString());
         response.setGatewayKey(iotGateway.getGatewayKey());
         response.setName(iotGateway.getName());
         response.setProjectId(iotGateway.getProjectId());
@@ -114,6 +114,7 @@ implements IotGatewayService{
             gateway.setName(request.getName());
             gateway.setGatewayKey(request.getGatewayKey());
             gateway.setDescribes(request.getDescribes());
+            gateway.setStatus(request.getStatus());
             updateById(gateway);
             return new ResponseEntity<>(RespBean.success("更新成功"), HttpStatus.OK);
         } catch (Exception e){

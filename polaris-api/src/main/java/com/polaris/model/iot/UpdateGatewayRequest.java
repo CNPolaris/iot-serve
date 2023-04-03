@@ -10,4 +10,5 @@ public class UpdateGatewayRequest {
   @JsonProperty("gateway_key")
   private String gatewayKey;
   private String describes;
+  private Integer status;
 }
