@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polaris.mbg.mapper.IotProjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.polaris.mbg.entity.IotProject">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="projectKey" column="project_key" jdbcType="VARCHAR"/>
+            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+            <result property="userCount" column="user_count" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="describes" column="describes" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,project_key,
+        create_user,user_count,create_time,
+        status,describes
+    </sql>
+    <select id="getMyProjectList" parameterType="java.lang.Long" resultType="com.polaris.model.iot.GetMyProjectResponse">
+        SELECT project.id, project.name, project.project_key, project.create_time, project.user_count, project.status,
+               COUNT(DISTINCT gateway.id) as gatewayCount
+        FROM iot_project project
+                 LEFT JOIN iot_gateway gateway
+                           ON gateway.project_id = project.id
+        WHERE project.create_user = #{userId}
+        GROUP BY project.id
+    </select>
+
+    <select id="getProjectDetail" parameterType="java.lang.Long" resultType="com.polaris.model.iot.GetProjectDetailResponse">
+        SELECT project.id, project.name, user.email as createUser, project.create_time, project.status, project.describes
+        FROM iot_project as project LEFT JOIN sys_user as user
+        ON project.create_user = user.id
+        WHERE project.id  = #{projectId}
+    </select>
+
+</mapper>

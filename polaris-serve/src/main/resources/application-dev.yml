@@ -1,0 +1,31 @@
+server:
+  port: 8083
+  address: 192.168.31.11
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/iot?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+#  type-aliases-package: com.polaris.mbg.mapper
+#  configuration:
+#    map-underscore-to-camel-case: true
+
+iot-tcp:
+  ip: 127.0.0.1
+  port: 8888
+
+logging:
+  level:
+    com.polaris: debug

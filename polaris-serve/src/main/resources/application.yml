@@ -1,0 +1,32 @@
+# 项目相关配置
+iot:
+  # 名称
+  name: IotCloud
+  # 版本
+  version: 1.1
+  # 版权年份
+  copyrightYear: 2023
+
+# 开发环境配置
+spring:
+  application:
+    name: iot-clouds
+  profiles:
+    active: dev
+
+
+jwt:
+  tokenHeader: Authorization
+  secret: iot-secret
+  expiration: 604800
+  tokenHead: 'Bearer '
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /iot/login
+      - /iot/gateway/auth
+      - /iot/monitor/auth
+      - /iot/v1/srs/stream/publish
+
