@@ -123,7 +123,7 @@ implements IotMonitorService{
         List<MonitorItemResp> list = new ArrayList<>();
         objectPage.getRecords().forEach(item -> {
             MonitorItemResp itemResp = new MonitorItemResp(
-                    item.getId().toString(), item.getName(), item.getCreateTime().toString(),
+                    item.getId().toString(), item.getName(), item.getCreateTime(),
                     item.getStatus(), item.getOnLine(),"rtmp://" +serve.getAddress()+":port/live/" + item.getMonitorKey(), item.getDescribes());
             list.add(itemResp);
         });

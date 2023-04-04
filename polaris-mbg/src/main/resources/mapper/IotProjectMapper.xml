@@ -31,9 +31,16 @@
     </select>
 
     <select id="getProjectDetail" parameterType="java.lang.Long" resultType="com.polaris.model.iot.GetProjectDetailResponse">
-        SELECT project.id, project.name, user.email as createUser, project.create_time, project.status, project.describes
-        FROM iot_project as project LEFT JOIN sys_user as user
+        SELECT project.id, project.name, user.email as createUser, project.create_time, project.status, project.describes, serve.name as serverName
+        FROM iot_project as project
+        LEFT JOIN sys_user as user
         ON project.create_user = user.id
+        LEFT JOIN sys_serve as serve
+        ON serve.id = (
+            SELECT con.serve_id
+            FROM sys_server_project con
+            WHERE con.project_id = #{projectId}
+        )
         WHERE project.id  = #{projectId}
     </select>
 
