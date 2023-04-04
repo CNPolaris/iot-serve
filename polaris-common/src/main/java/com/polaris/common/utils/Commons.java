@@ -63,5 +63,10 @@ public class Commons {
     public final static int FREE_COUNT = 3;
     public final static int STANDARD_COUNT = 100;
     public final static int PRO_COUNT = 1000;
+
+    public final static String SRS_ADDRESS = "http://127.0.0.1:1985";
+    public final static String SRS_SUMMARIES = "/api/v1/summaries";     //获取服务器的摘要信息
+
+    public final static String SRS_MEMINFOS = "/api/v1/meminfos";        //获取服务器内存使用情况
 }
 

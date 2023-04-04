@@ -29,4 +29,5 @@ secure:
       - /iot/gateway/auth
       - /iot/monitor/auth
       - /iot/v1/srs/stream/**
+      - /iot/v1/api/srs/summaries
 

@@ -124,7 +124,7 @@ implements IotMonitorService{
         objectPage.getRecords().forEach(item -> {
             MonitorItemResp itemResp = new MonitorItemResp(
                     item.getId().toString(), item.getName(), item.getCreateTime(),
-                    item.getStatus(), item.getOnLine(),"rtmp://" +serve.getAddress()+":port/live/" + item.getMonitorKey(), item.getDescribes());
+                    item.getStatus(), item.getOnLine(),"rtmp://" +serve.getAddress()+":1935/live/" + item.getMonitorKey(), item.getDescribes());
             list.add(itemResp);
         });
         response.setSize(list.size());
