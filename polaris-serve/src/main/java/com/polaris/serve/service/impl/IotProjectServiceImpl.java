@@ -48,6 +48,7 @@ implements IotProjectService{
         iotProject.setCreateTime(new Timestamp(time));
         iotProject.setCreateUser(userId);
         iotProject.setName(request.getName());
+        iotProject.setServerId(request.getServerId());
         if(role == 1){
             iotProject.setUserCount(Commons.FREE_COUNT - 1);
         } else if (role == 2) {
@@ -56,11 +57,11 @@ implements IotProjectService{
             iotProject.setUserCount(Commons.PRO_COUNT - 1);
         }
         save(iotProject);
-        SysServerProject serverProject = new SysServerProject();
-        serverProject.setServeId(request.getServerId());
-        serverProject.setProjectId(iotProject.getId());
-        serverProject.setStatus(StatusTypeEnum.YES.getCode());
-        serverProjectMapper.insert(serverProject);
+//        SysServerProject serverProject = new SysServerProject();
+//        serverProject.setServeId(request.getServerId());
+//        serverProject.setProjectId(iotProject.getId());
+//        serverProject.setStatus(StatusTypeEnum.YES.getCode());
+//        serverProjectMapper.insert(serverProject);
 
         return RespBean.success("创建项目成功", iotProject);
     }

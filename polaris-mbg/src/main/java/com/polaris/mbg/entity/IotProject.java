@@ -55,6 +55,16 @@ public class IotProject implements Serializable {
      */
     private String describes;
 
+    private Integer serverId;
+
+    public Integer getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Integer serverId) {
+        this.serverId = serverId;
+    }
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

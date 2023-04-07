@@ -23,7 +23,7 @@ public interface IotMonitorService extends IService<IotMonitor> {
 
     ResponseEntity<Object> getMonitor(Long monitorId);
 
-    ResponseEntity<Object> getMonitorList(MonitorGetListRequest request);
+    ResponseEntity<Object> getMonitorList(Integer cur_region, MonitorGetListRequest request);
 
     ResponseEntity<RespBean> updateMonitor(Long monitorId, MonitorUpdateRequest request);
 

@@ -53,6 +53,16 @@ public class IotGateway implements Serializable {
      */
     private String describes;
 
+    private String imei;
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

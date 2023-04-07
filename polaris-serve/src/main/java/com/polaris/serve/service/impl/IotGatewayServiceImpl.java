@@ -3,7 +3,9 @@ package com.polaris.serve.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.polaris.mbg.entity.IotProject;
 import com.polaris.mbg.entity.SysServe;
+import com.polaris.mbg.mapper.IotProjectMapper;
 import com.polaris.mbg.mapper.SysServeMapper;
 import com.polaris.mbg.mapper.SysServerProjectMapper;
 import com.polaris.model.iot.*;
@@ -37,6 +39,9 @@ implements IotGatewayService{
     @Resource
     private SysServeMapper serveMapper;
 
+    @Resource
+    private IotProjectMapper projectMapper;
+
 
     @Override
     public RespBean createIotGateway(CreateGatewayRequest request) {
@@ -47,6 +52,7 @@ implements IotGatewayService{
         gateway.setName(request.getName());
         gateway.setProjectId(request.getProjectId());
         gateway.setStatus(StatusTypeEnum.YES.getCode());
+        gateway.setImei(request.getImei());
         long time = System.currentTimeMillis();
         gateway.setCreateTime(new Timestamp(time));
         gateway.setDescribes(request.getDescribes());
@@ -71,7 +77,8 @@ implements IotGatewayService{
     @Override
     public RespBean getGatewayIdByProject(Long projectId, GatewayListRequest request) {
         // get server
-        SysServe serve = serveMapper.getByProjectId(projectId);
+        IotProject iotProject = projectMapper.selectById(projectId);
+        SysServe serve = serveMapper.selectById(iotProject.getServerId());
         Page<IotGateway> objectPage = new Page<>(request.getPage(), request.getLimit());
         gatewayMapper.selectPage(objectPage, new QueryWrapper<IotGateway>().eq("project_id", projectId));
         GatewayListResponse res = new GatewayListResponse();
@@ -92,7 +99,8 @@ implements IotGatewayService{
     public RespBean getGatewayDetail(Long gatewayId) {
         QueryWrapper<IotGateway> queryWrapper = new QueryWrapper<IotGateway>().eq("id", gatewayId);
         IotGateway iotGateway = gatewayMapper.selectOne(queryWrapper);
-        SysServe serve = serveMapper.getByProjectId(iotGateway.getProjectId());
+        IotProject iotProject = projectMapper.selectById(iotGateway.getProjectId());
+        SysServe serve = serveMapper.selectById(iotProject.getServerId());
         GatewayDetailResponse response = new GatewayDetailResponse();
         response.setId(iotGateway.getId().toString());
         response.setGatewayKey(iotGateway.getGatewayKey());

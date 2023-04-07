@@ -19,6 +19,16 @@ public class CreateGatewayRequest   {
 
   private String describes;
 
+  private String imei;
+
+  public String getImei() {
+    return imei;
+  }
+
+  public void setImei(String imei) {
+    this.imei = imei;
+  }
+
   public String getDescribes() {
     return describes;
   }

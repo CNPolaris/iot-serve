@@ -48,7 +48,7 @@ public interface IotProjectApi {
             produces = { "application/json" },
             consumes = { "application/json" },
             method = RequestMethod.GET)
-    default ResponseEntity<RespBean> iotProjectGet(Principal principal, @ApiParam(value = "" ) @RequestHeader(value="Authorization", required=true) String authorization,
+    default ResponseEntity<RespBean> iotProjectGet(Principal principal, @CookieValue(value = "cur_region", defaultValue = "") Integer cur_region,  @ApiParam(value = "" ) @RequestHeader(value="Authorization", required=true) String authorization,
                                                     @ApiParam(value = ""  ) @RequestBody(required = false) GetMyProjectRequest request) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }

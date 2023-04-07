@@ -36,8 +36,8 @@ public class IotMonitorController implements IotMonitorApi {
     }
 
     @Override
-    public ResponseEntity<Object> iotApiMonitorList(String authorization, MonitorGetListRequest request) {
-        return monitorService.getMonitorList(request);
+    public ResponseEntity<Object> iotApiMonitorList(Integer cur_region, String authorization, MonitorGetListRequest request) {
+        return monitorService.getMonitorList(cur_region, request);
     }
 
     /**

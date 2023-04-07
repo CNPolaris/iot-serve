@@ -12,11 +12,12 @@
             <result property="status" column="status" jdbcType="INTEGER"/>
             <result property="projectId" column="project_id" jdbcType="BIGINT"/>
             <result property="describes" column="describes" jdbcType="VARCHAR"/>
+            <result property="imei" column="imei" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,name,gateway_key,
-        create_time,status,project_id,
+        create_time,status,project_id, imei,
         describes
     </sql>
 </mapper>

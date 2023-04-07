@@ -96,8 +96,10 @@ public interface IotMonitorApi {
     @RequestMapping(value = "/iot/api/monitor/list",
             produces = { "application/json" },
             method = RequestMethod.POST)
-    default ResponseEntity<Object> iotApiMonitorList(@ApiParam(value = "" ) @RequestHeader(value="Authorization", required=true) String authorization,
-                                                    @RequestBody MonitorGetListRequest request) {
+    default ResponseEntity<Object> iotApiMonitorList(
+            @CookieValue(value = "cur_region", defaultValue = "") Integer cur_region,
+            @ApiParam(value = "" ) @RequestHeader(value="Authorization", required=true) String authorization,
+            @RequestBody MonitorGetListRequest request) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 

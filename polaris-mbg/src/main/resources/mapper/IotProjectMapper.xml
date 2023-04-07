@@ -12,16 +12,18 @@
             <result property="userCount" column="user_count" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="serverId" column="server_id" jdbcType="INTEGER"/>
             <result property="describes" column="describes" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,name,project_key,
         create_user,user_count,create_time,
-        status,describes
+        status,server_id, describes
     </sql>
     <select id="getMyProjectList" parameterType="java.lang.Long" resultType="com.polaris.model.iot.GetMyProjectResponse">
         SELECT project.id, project.name, project.project_key, project.create_time, project.user_count, project.status,
+               project.server_id,
                COUNT(DISTINCT gateway.id) as gatewayCount
         FROM iot_project project
                  LEFT JOIN iot_gateway gateway
@@ -31,16 +33,14 @@
     </select>
 
     <select id="getProjectDetail" parameterType="java.lang.Long" resultType="com.polaris.model.iot.GetProjectDetailResponse">
-        SELECT project.id, project.name, user.email as createUser, project.create_time, project.status, project.describes, serve.name as serverName
+        SELECT project.id, project.name, user.email as createUser, project.create_time, project.status, project.describes,
+               project.server_id,
+               serve.name as serverName
         FROM iot_project as project
         LEFT JOIN sys_user as user
         ON project.create_user = user.id
         LEFT JOIN sys_serve as serve
-        ON serve.id = (
-            SELECT con.serve_id
-            FROM sys_server_project con
-            WHERE con.project_id = #{projectId}
-        )
+        ON serve.id = project.server_id
         WHERE project.id  = #{projectId}
     </select>
 

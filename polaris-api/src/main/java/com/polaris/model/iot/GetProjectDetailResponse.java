@@ -17,4 +17,6 @@ public class GetProjectDetailResponse {
     private String describes;
 
     private String serverName;
+
+    private Integer serverId;
 }

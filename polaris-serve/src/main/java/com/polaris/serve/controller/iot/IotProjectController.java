@@ -35,8 +35,9 @@ public class IotProjectController implements IotProjectApi {
     }
 
     @Override
-    public ResponseEntity<RespBean> iotProjectGet(Principal principal, String authorization, GetMyProjectRequest request) {
+    public ResponseEntity<RespBean> iotProjectGet(Principal principal, Integer cur_region, String authorization, GetMyProjectRequest request) {
         // 暂时不分页查询
+        System.out.print(cur_region);
         String email = principal.getName();
         Long userId = userService.getUserIdByName(email);
         return new ResponseEntity<>(projectService.getMyProject(userId), HttpStatus.OK);

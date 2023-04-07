@@ -14,4 +14,6 @@ public class GetMyProjectResponse {
     private Integer userCount;
     private Integer status;
     private Integer gatewayCount;
+
+    private Integer serverId;
 }

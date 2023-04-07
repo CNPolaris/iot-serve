@@ -114,10 +114,14 @@ implements IotMonitorService{
     }
 
     @Override
-    public ResponseEntity<Object> getMonitorList(MonitorGetListRequest request) {
+    public ResponseEntity<Object> getMonitorList(Integer cur_region, MonitorGetListRequest request) {
         Page<IotMonitor> objectPage = new Page<>(request.getPage(), request.getLimit());
         monitorMapper.selectPage(objectPage, new QueryWrapper<IotMonitor>().eq("project_id", request.getProjectId()));
-        SysServe serve = serveMapper.getByProjectId(request.getProjectId());
+//        SysServe serve = serveMapper.getByProjectId(request.getProjectId());
+//        if (serve.equals(null)) {
+//            return new ResponseEntity<>(RespBean.error("项目未与服务器关联"), HttpStatus.OK);
+//        }
+        SysServe serve = serveMapper.selectById(cur_region);
         MonitorGetListResponse response = new MonitorGetListResponse();
         response.setTotal(objectPage.getTotal());
         List<MonitorItemResp> list = new ArrayList<>();
